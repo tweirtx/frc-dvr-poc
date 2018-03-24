@@ -1,0 +1,5 @@
+Notes:
+Test hour at a later time (where 24-hour time would be over 12 hours)
+Figure out how to avoid overwriting files
+Write for other platforms, example platforms could be YouTube Live, Livestream, and Ustream
+Get live checking to work
