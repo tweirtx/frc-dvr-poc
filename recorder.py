@@ -26,39 +26,52 @@ webcast = eventtba.webcasts[0]
 if debug:
 	print(webcast)
 
-if webcast.type == 'twitch':
-	url = 'https://twitch.tv/{}'.format(webcast.channel)
+stream = streamlink.Streamlink()
+
+
+def logstart():
 	with db.Session() as session:
 		starting = streamdb(eventkey=eventkey, starttime='{}:{}:{}'.format(datetime.datetime.now().hour,
 																		datetime.datetime.now().minute,
 																		   datetime.datetime.now().second))
 		session.add(starting)
 
-	def checkiflive():
-		print('do some twitch api stuff to see if they\'re live')
+
+def checkiflive():
+	streams = stream.streams(url)
+	try:
+		streams['best']
 		return True
+	except KeyError:
+		return False
 
-	def waituntillive():
-		while True:
-			print("Stream is not live yet, waiting 30 seconds and retrying")
-			sleep(30)
-			is_live = checkiflive()
-			if is_live:
-				break
 
+def waituntillive():
+	while True:
+		is_live = checkiflive()
+		if is_live:
+			break
+		print("Stream is not live yet, waiting 30 seconds and retrying")
+		sleep(30)
+
+
+if webcast.type == 'twitch':
+	url = 'https://twitch.tv/{}'.format(webcast.channel)
+elif webcast.type == 'dacast':
+	print("Sorry, we can't work with this streaming provider due to required info being behind a paywall. Please bug FiM to stop using DaCast.")
+	exit(0)
 else:
 	print("This event's stream is currently unsupported")
 	exit()
 if debug:
 	url = 'https://twitch.tv/tweirtx' # Debug only, remove before production use!
+
 waituntillive()
-stream = streamlink.Streamlink()
+print("Now live!")
 streams = stream.streams(url)
 stream_file = streams['best'].open()
 with open('{}.mp4'.format(eventkey), 'wb') as f:
 	while True:
 		f.write(stream_file.read(1024))
-		is_live = checkiflive()
-		if not is_live:
-			break
-
+		# if not checkiflive():
+		# 	break
