@@ -71,7 +71,5 @@ print("Now live!")
 streams = stream.streams(url)
 stream_file = streams['best'].open()
 with open('{}.mp4'.format(eventkey), 'wb') as f:
-	while True:
+	while checkiflive():
 		f.write(stream_file.read(1024))
-		# if not checkiflive():
-		# 	break
