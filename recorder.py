@@ -58,7 +58,8 @@ def waituntillive():
 if webcast.type == 'twitch':
     url = 'https://twitch.tv/{}'.format(webcast.channel)
 elif webcast.type == 'dacast':
-    print("Sorry, we can't work with this streaming provider due to required info being behind a paywall. Please bug FiM to stop using DaCast.")
+    print("Sorry, we can't work with this streaming provider due to required info being behind a paywall. "
+          "Please bug FiM to stop using DaCast.")
     exit(0)
 elif webcast.type == 'livestream':
     url = 'https://livestream.com/{}'.format(webcast.channel)
@@ -73,7 +74,7 @@ print("Now live!")
 logstart()
 streams = stream.streams(url)
 stream_file = streams['best'].open()
-with open('{}.mp4'.format(eventkey), 'wb') as f:
+with open('{} {}.mp4'.format(eventkey, datetime.date.weekday(self=datetime.date.today())), 'wb') as f:
     while True:
         stream_data = stream_file.read(10240)
         if stream_data == b'':
