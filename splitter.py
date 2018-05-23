@@ -8,8 +8,8 @@ tbap = tbapy.TBA(getAPIKey.Key.tba)
 
 def get_start_time(event, day):
     with db.Session as session:
-        session.query(streamdb).filter_by(eventkey=event, day=day)
-    return "Todo"
+        start_time_db_result = session.query(streamdb).filter_by(eventkey=event, day=day).one_or_none()
+        return start_time_db_result.starttime
 
 
 def splitter(day, streamtime, i):
