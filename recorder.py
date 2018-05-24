@@ -23,9 +23,7 @@ stream = streamlink.Streamlink()
 
 def logstart():
     with db.Session() as session:
-        starting = streamdb(eventkey=eventkey, starttime='{}:{}:{}'.format(datetime.datetime.now().hour,
-                                                                        datetime.datetime.now().minute,
-                                                                           datetime.datetime.now().second))
+        starting = streamdb(eventkey=eventkey, starttime=datetime.datetime.now().timestamp())
         session.add(starting)
 
 
