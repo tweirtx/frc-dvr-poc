@@ -13,7 +13,8 @@ def get_start_time(event, day):
 
 
 def splitter(day, streamtime, i):
-    matchtimestamp = i.actual_time + datetime.timezone.utcoffset()
+    offset = datetime.datetime.utcnow() - datetime.datetime.now()
+    matchtimestamp = i.actual_time + offset
     starttime = matchtimestamp - streamtime
     endtime = starttime + 180
     ffmpeg_extract_subclip('{}.mp4'.format(day), starttime, endtime, '{}.mp4'.format(i.key))
