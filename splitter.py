@@ -1,7 +1,7 @@
 import datetime, tbapy
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import getAPIKey, db
-from recorder import streamdb
+from streamdb import streamdb
 
 tbap = tbapy.TBA(getAPIKey.Key.tba)
 
@@ -33,3 +33,7 @@ def split(event):
         time = get_start_time(event, day)
         if i.actual_time and not already_exists:
                 splitter(day, time, i)
+
+
+# Debug testing:
+split('2018txsa')

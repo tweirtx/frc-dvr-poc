@@ -7,7 +7,8 @@ __all__ = ['engine', 'DatabaseObject', 'Session', 'Column', 'Integer', 'String',
 
 engine = sqlalchemy.create_engine('sqlite:///frcdvr.db')
 DatabaseObject = declarative_base(bind=engine, name='DatabaseObject')
-DatabaseObject.__table_args__ = {'extend_existing': True} #allow use of the reload command with db cogs
+DatabaseObject.__table_args__ = {'extend_existing': True} # allow use of the reload command with db cogs
+
 
 class CtxSession(Session):
 	def __enter__(self):
@@ -25,6 +26,7 @@ class CtxSession(Session):
 	
 	async def __aexit__(self, err_type, err, tb):
 		return self.__exit__(err_type, err, tb)
+
 
 Session = sessionmaker(bind=engine, class_=CtxSession)
 

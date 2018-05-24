@@ -1,19 +1,10 @@
 import streamlink, tbapi, datetime
 import getAPIKey, db
 from time import sleep
+from streamdb import streamdb
 
-tba = tbapi.TBAParser(api_key=getAPIKey.key.tba, cache=False)
+tba = tbapi.TBAParser(api_key=getAPIKey.Key.tba, cache=False)
 
-
-class streamdb(db.DatabaseObject):
-    __tablename__ = 'streamstarts'
-    eventkey = db.Column(db.String)
-    starttime = db.Column(db.String)
-    day = db.Column(db.String)
-    primary_key = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
-
-db.DatabaseObject.metadata.create_all()
 debug = True
 if debug:
     eventkey = '2018vapor'
